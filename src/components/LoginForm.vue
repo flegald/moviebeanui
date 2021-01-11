@@ -82,7 +82,8 @@ export default {
             "password": this.form.password
           }).then((resp) => {
             if (resp.token) {
-              this.$root.$data.logUserIn(resp.token)
+              this.$root.$data.userToken = resp.token
+              this.$root.$data.userLoggedIn = true
               this.$root.$data.setPageView('Profile')
             } else {
               this.error = true

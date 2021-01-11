@@ -16,5 +16,8 @@ export const store = {
     },
     setActiveMovie (imdbID) {
         this.activeMovie = imdbID
+    },
+    retrieveToken() {
+        return this.userToken
     }
 }

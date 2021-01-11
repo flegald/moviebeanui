@@ -49,7 +49,7 @@ export const addMovie = (imdbID, token) => {
 }
 
 export const getMovieDetails = (imdbID, token) => {
-    const endpoint = `/movie/${imdbID}`
+    const endpoint = `/movie/${imdbID}/`
     const method = "GET"
     return serviceCall(endpoint, method, null, token)
 }
