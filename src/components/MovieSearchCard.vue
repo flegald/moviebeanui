@@ -103,12 +103,12 @@ export default {
     sendAddRequest(imdbID) {
       addMovie(imdbID, this.$root.$data.userToken)
           .then((resp) => {
-            this.$root.$data.setActiveMovie(resp.imdb_id)
+            this.$root.$data.activeMovie = resp.imdb_id
             this.$root.$data.setPageView("MovieDetails")
           })
     },
     viewExistingMovie(imdbID) {
-      this.$root.$data.setActiveMovie(imdbID)
+      this.$root.$data.activeMovie = imdbID
       this.$root.$data.setPageView("MovieDetails")
     }
   },
