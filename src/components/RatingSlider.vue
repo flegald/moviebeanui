@@ -20,7 +20,20 @@
     >
       Rate
     </md-button>
-  </div>
+    <md-button
+      v-if="inWatchlist === 0"
+      class="md-raised md-primary"
+      @click="sendAddToWatchList(imdbID)"
+    >
+      Add to Watchlist
+    </md-button>
+    <md-button
+        v-if="inWatchlist === 1"
+        class="md-raised md-primary"
+        @click="sendDeleteFromWatchList(imdbID)"
+    >
+      Remove From Watchlist
+    </md-button>  </div>
 
   <div v-else>
     <p class="md-display-1">
@@ -32,13 +45,14 @@
 <script>
 
 import VueSlider from 'vue-slider-component'
-import {createMovieRating, getUserMovieRating} from "@/service/service";
+import {createMovieRating, getUserMovieRating, getWatchlist, addToWatchList, removeFromWatchList} from "@/service/service";
 import 'vue-slider-component/theme/default.css'
 export default {
   name: "RatingSlider",
   data: () => ({
     recordedUserRating: '',
     userRating: 5,
+    inWatchlist: 0,
     ratingData: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     ratingMarks: {
       "1": "🥺",
@@ -52,15 +66,28 @@ export default {
     },
   },
   components: {
-    VueSlider
+    VueSlider,
   },
   methods: {
     sendRating(imdbID) {
       createMovieRating(imdbID, this.userRating , this.$root.$data.userToken)
       .then((resp) => {
         this.recordedUserRating = resp.rating
+        this.sendDeleteFromWatchList(imdbID)
         this.$emit("update")
       })
+    },
+    sendAddToWatchList(imdbID) {
+      addToWatchList(imdbID, this.$root.$data.userToken)
+      .then(() => {
+        this.getUserWatchlist()
+      })
+    },
+    sendDeleteFromWatchList(imdbID) {
+      removeFromWatchList(imdbID, this.$root.$data.userToken)
+          .then(() => {
+            this.getUserWatchlist()
+          })
     },
     getUserRating() {
       getUserMovieRating(
@@ -68,9 +95,23 @@ export default {
           this.$root.$data.userToken
       ).then((resp) => {
         if (resp) {
-          this.recordedUserRating = resp[0].rating
+          if (resp.length > 0) {
+            this.recordedUserRating = resp[0].rating
+          }
+          else {
+            this.getUserWatchlist()
+          }
+
         }
       })
+    },
+    getUserWatchlist() {
+      getWatchlist(this.$root.$data.userToken)
+          .then((resp) => {
+            this.inWatchlist = resp.filter((m) => {
+              return m.imdb_id === this.$root.$data.activeMovie
+            }).length
+          })
     }
   },
   beforeMount() {

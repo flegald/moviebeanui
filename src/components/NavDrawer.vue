@@ -29,7 +29,14 @@
           @click="navigate('Profile')"
         >
           <md-icon>person</md-icon>
-          <span class="md-list-item-text">My Stuff</span>
+          <span class="md-list-item-text">My Reviews</span>
+        </md-list-item>
+
+        <md-list-item
+          @click="navigate('Watchlist')"
+        >
+          <md-icon>personal_video</md-icon>
+          <span class="md-list-item-text">My Watchlist</span>
         </md-list-item>
 
         <md-list-item

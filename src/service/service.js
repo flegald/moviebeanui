@@ -1,5 +1,5 @@
-// const API_BASE = "http://127.0.0.1:8000"
-const API_BASE = "https://moviebeanapi.herokuapp.com"
+const API_BASE = "http://127.0.0.1:8000"
+// const API_BASE = "https://moviebeanapi.herokuapp.com"
 
 
 export const serviceCall = (url, method, data= null, token= null) => {
@@ -89,6 +89,26 @@ export const getAllMovies = (token, filter=null) => {
     }
     const method = "GET"
     return serviceCall(endpoint, method,null,  token)
+}
+
+export const getWatchlist = (token) => {
+    const endpoint = "/watchlist/"
+    const method = "GET"
+    return serviceCall(endpoint, method, null, token)
+}
+
+export const addToWatchList = (imdbID, token) => {
+    const endpoint = "/watchlist/"
+    const method = "POST"
+    const data = {"imdb_id": imdbID}
+    return serviceCall(endpoint, method, data, token)
+}
+
+export const removeFromWatchList = (imdbID, token) => {
+    const endpoint = "/watchlist/"
+    const method = "DELETE"
+    const data = {"imdb_id": imdbID}
+    return serviceCall(endpoint, method, data, token)
 }
 
 

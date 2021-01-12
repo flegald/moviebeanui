@@ -17,6 +17,7 @@ import MovieDetails from "@/components/MovieDetails";
 import BrowseMovies from "@/components/BrowseMovies";
 import Profile from "@/components/Profile";
 import LoginView from "@/components/LoginView";
+import Watchlist from "@/components/Watchlist";
 
 export default {
   name: "App",
@@ -26,7 +27,8 @@ export default {
     MovieDetails,
     BrowseMovies,
     Profile,
-    LoginView
+    LoginView,
+    Watchlist
   },
 };
 </script>
