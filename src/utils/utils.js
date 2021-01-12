@@ -1,12 +1,12 @@
 export const getRatingAverage = (ratings) => {
     if (!ratings.length) return 0
-    return (ratings.map((r) => {
+    return ((ratings.map((r) => {
         let individual = r
         if (r.rating) {
             individual = r.rating
         }
         return parseInt(individual)
-    }).reduce((a, b) => a + b)) / ratings.length
+    }).reduce((a, b) => a + b)) / ratings.length).toFixed(2)
 }
 
 export const sortAlpha = (movies) => {

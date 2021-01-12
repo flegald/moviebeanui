@@ -4,19 +4,17 @@
     <br>
     <md-divider />
     <br>
-    <form novalidate>
-      <md-card class="md-layout-item md-size-50 md-small-size-100">
-        <md-field>
-          <label for="movie-search">Search Move Title</label>
-          <md-input
-            v-model="searchInput"
-            @input="sendSearchReq"
-            name="movie-search"
-            id="movie-search"
-          />
-        </md-field>
-      </md-card>
-    </form>
+    <md-card class="md-layout-item md-size-50 md-small-size-100">
+      <md-field>
+        <label for="movie-search">Search Move Title</label>
+        <md-input
+          v-model="searchInput"
+          @input="sendSearchReq"
+          name="movie-search"
+          id="movie-search"
+        />
+      </md-field>
+    </md-card>
     <ul class="results-list">
       <li
         v-for="movie in movies"

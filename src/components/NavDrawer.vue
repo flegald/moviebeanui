@@ -40,18 +40,19 @@
         </md-list-item>
 
         <md-list-item
+            @click="navigate('BrowseMovies')"
+        >
+          <md-icon>thumbs_up_down</md-icon>
+          <span class="md-list-item-text">Browse Reviews</span>
+        </md-list-item>
+
+        <md-list-item
           @click="navigate('MovieSearch')"
         >
           <md-icon>add_circle</md-icon>
           <span class="md-list-item-text">Add Movie</span>
         </md-list-item>
 
-        <md-list-item
-          @click="navigate('BrowseMovies')"
-        >
-          <md-icon>thumbs_up_down</md-icon>
-          <span class="md-list-item-text">Browse</span>
-        </md-list-item>
       </md-list>
     </md-drawer>
   </div>

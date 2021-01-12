@@ -5,7 +5,15 @@
     <md-divider />
     <br>
 
-    <ul class="results-list">
+    <md-progress-bar
+      v-if="isLoading"
+      md-mode="query"
+    />
+
+    <ul
+      class="results-list"
+      v-else
+    >
       <li
         v-for="movie in movies"
         :key="movie.imdbID"
@@ -30,13 +38,18 @@ import { getWatchlist} from "@/service/service";
 export default {
 name: "Watchlist",
   data: () => ({
-    movies: []
+    movies: [],
+    isLoading: false
   }),
   methods: {
     getUserWatchlist() {
+      this.isLoading = true
       getWatchlist(this.$root.$data.userToken)
       .then((resp) => {
         this.movies = resp
+      })
+      .finally(() => {
+        this.isLoading = false
       })
     }
   },
