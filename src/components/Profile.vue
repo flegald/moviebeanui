@@ -4,8 +4,14 @@
     <br>
     <md-divider />
     <br>
-
-    <ul class="results-list">
+    <md-progress-bar
+      v-if="isLoading"
+      md-mode="query"
+    />
+    <ul
+      v-else
+      class="results-list"
+    >
       <li
         v-for="movie in movies"
         :key="movie.imdbID"
@@ -20,6 +26,7 @@
         />
       </li>
     </ul>
+    <div id="junk">{{junkText}}</div>
   </div>
 </template>
 
@@ -31,14 +38,17 @@ import MovieSearchCard from "@/components/MovieSearchCard";
 export default {
   name: "Profile",
   data: () => ({
-    movies: []
+    movies: [],
+    isLoading: false,
+    junkText: ''
   }),
   methods: {
     retrieveReviews() {
+      this.isLoading = true
       getAllUserReviews(this.$root.$data.userToken)
           .then((r) => {
             const imdb_ids = r.map((r) => r.movie)
-            getAllMovies(this.$root.$data.userToken, imdb_ids)
+            getAllMovies(this.$root.$data.userToken, `?ids=${imdb_ids}`)
             .then((resp) => {
               this.movies = resp.map((m) => {
                 return {
@@ -46,6 +56,8 @@ export default {
                   ... m
                 }
               })
+            }).finally(() => {
+              this.isLoading = false
             })
           })
     }

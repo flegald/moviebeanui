@@ -87,8 +87,8 @@ export default {
       default: false
     },
     movieBeanRating: {
-      type: Number,
-      default: 0
+      type: String,
+      default: ''
     },
     numOfReviews: {
       type: Number,

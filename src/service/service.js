@@ -1,4 +1,5 @@
 // const API_BASE = "http://127.0.0.1:8000"
+// const API_BASE = "http://10.0.0.172:8000"
 const API_BASE = "https://moviebeanapi.herokuapp.com"
 
 
@@ -82,11 +83,8 @@ export const getAllUserReviews = (token) => {
     return serviceCall(endpoint, method,null,  token)
 }
 
-export const getAllMovies = (token, filter=null) => {
-    let endpoint = "/movie/"
-    if (filter) {
-        endpoint += `?ids=${filter}`
-    }
+export const getAllMovies = (token, filter= "") => {
+    let endpoint = "/movie/" + filter
     const method = "GET"
     return serviceCall(endpoint, method,null,  token)
 }

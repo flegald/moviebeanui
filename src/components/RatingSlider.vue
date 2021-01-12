@@ -8,6 +8,7 @@
       :data="ratingData"
       :marks="ratingMarks"
       :lazy="true"
+      :data-vlue="userRating"
       dot-size="50"
       height="10px"
       style="padding-left: 15px; padding-right: 15px;"
@@ -15,30 +16,51 @@
     <br>
     <br>
     <md-button
-      class="md-raised md-primary"
+      class="md-raised md-primary md-dense"
       @click="sendRating(imdbID)"
     >
       Rate
     </md-button>
     <md-button
       v-if="inWatchlist === 0"
-      class="md-raised md-primary"
+      class="md-raised md-primary md-dense"
       @click="sendAddToWatchList(imdbID)"
     >
       Add to Watchlist
     </md-button>
     <md-button
-        v-if="inWatchlist === 1"
-        class="md-raised md-primary"
-        @click="sendDeleteFromWatchList(imdbID)"
+      v-if="inWatchlist === 1"
+      class="md-raised md-primary md-dense"
+      @click="sendDeleteFromWatchList(imdbID)"
     >
       Remove From Watchlist
-    </md-button>  </div>
+    </md-button>
+  </div>
 
   <div v-else>
     <p class="md-display-1">
       You rated {{ recordedUserRating }} Beans!
     </p>
+    <md-button
+        class="md-raised md-primary md-dense"
+        @click="resetRating"
+    >
+      Edit Rating
+    </md-button>
+    <md-button
+        v-if="inWatchlist === 0"
+        class="md-raised md-primary md-dense"
+        @click="sendAddToWatchList(imdbID)"
+    >
+      Add to Watchlist
+    </md-button>
+    <md-button
+        v-if="inWatchlist === 1"
+        class="md-raised md-primary md-dense"
+        @click="sendDeleteFromWatchList(imdbID)"
+    >
+      Remove From Watchlist
+    </md-button>
   </div>
 </template>
 
@@ -51,7 +73,7 @@ export default {
   name: "RatingSlider",
   data: () => ({
     recordedUserRating: '',
-    userRating: 5,
+    userRating: "5",
     inWatchlist: 0,
     ratingData: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     ratingMarks: {
@@ -98,10 +120,6 @@ export default {
           if (resp.length > 0) {
             this.recordedUserRating = resp[0].rating
           }
-          else {
-            this.getUserWatchlist()
-          }
-
         }
       })
     },
@@ -112,10 +130,14 @@ export default {
               return m.imdb_id === this.$root.$data.activeMovie
             }).length
           })
+    },
+    resetRating() {
+      this.recordedUserRating = ''
     }
   },
   beforeMount() {
     this.getUserRating()
+    this.getUserWatchlist()
   }
 }
 </script>

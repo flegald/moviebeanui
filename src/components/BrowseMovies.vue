@@ -3,7 +3,13 @@
     <span class="md-display-3">Browse</span>
     <br>
     <md-divider />
-    <md-field>
+
+    <md-progress-bar
+      v-if="isLoading"
+      md-mode="query"
+    />
+
+    <md-field v-if="!isLoading">
       <label for="sort">Sort</label>
       <md-select
         v-model="sortValue"
@@ -25,7 +31,10 @@
         </md-option>
       </md-select>
     </md-field>
-    <ul class="results-list">
+    <ul
+      class="results-list"
+      v-if="!isLoading"
+    >
       <li
         v-for="movie in allMovies"
         :key="movie.imdbID"
@@ -53,11 +62,13 @@ export default {
   name: "BrowseMovies",
   data: () => ({
     allMovies: [],
-    sortValue: "alpha"
+    sortValue: "alpha",
+    isLoading: false
   }),
   methods: {
     retrieveMovies() {
-      getAllMovies(this.$root.$data.userToken).then((r) => {
+      this.isLoading = true
+      getAllMovies(this.$root.$data.userToken, "?reviews=true").then((r) => {
         this.allMovies = r.map((m) => {
           return {
             movieBeanRating: getRatingAverage(m.ratings),
@@ -66,6 +77,7 @@ export default {
           }
         })
         this.allMovies = sortAlpha(this.allMovies)
+        this.isLoading = false
       })
     },
     sortList() {
