@@ -111,14 +111,6 @@ export default {
       this.$root.$data.activeMovie = imdbID
       this.$root.$data.setPageView("MovieDetails")
     },
-    determineEmoji(rating) {
-      switch (rating) {
-        case rating >= 10:
-          return "😍"
-        case rating >= 9:
-          return "🥰"
-      }
-    }
   },
 }
 </script>
