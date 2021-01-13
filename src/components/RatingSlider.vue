@@ -146,12 +146,6 @@ export default {
     resetRating() {
       this.recordedUserRating = ''
     },
-    countCommentChars() {
-      if (this.ratingComment >= 254) {
-        console.log("here")
-        this.ratingComment = this.ratingComment.slice(0, 254)
-      }
-    }
   },
   beforeMount() {
     this.getUserRating()
