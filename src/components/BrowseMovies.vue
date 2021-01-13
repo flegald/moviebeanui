@@ -31,12 +31,33 @@
         </md-option>
       </md-select>
     </md-field>
+
+
+    <md-field>
+      <label for="filterGenre">Genres</label>
+      <md-select
+        v-model="selectedGenres"
+        name="filterGenre"
+        id="filterGenre"
+        @md-selected="filterMovies"
+        multiple
+      >
+        <md-option
+          v-for="genre in allGenres"
+          :value="genre"
+          :key="genre"
+        >
+          {{ genre }}
+        </md-option>
+      </md-select>
+    </md-field>
+
     <ul
       class="results-list"
       v-if="!isLoading"
     >
       <li
-        v-for="movie in allMovies"
+        v-for="movie in filteredResults"
         :key="movie.imdbID"
       >
         <MovieSearchCard
@@ -55,47 +76,67 @@
 
 <script>
 import { getAllMovies } from "@/service/service";
-import { getRatingAverage, sortAlpha, sortHighLow, sortLowHigh, sortTotalReviews } from "@/utils/utils";
+import {
+  getRatingAverage,
+  sortMoviesAlpha,
+  sortHighLow,
+  sortLowHigh,
+  sortTotalReviews,
+  sortArrayAlpha, filterGenre
+} from "@/utils/utils";
 import MovieSearchCard from "@/components/MovieSearchCard";
 
 export default {
   name: "BrowseMovies",
   data: () => ({
     allMovies: [],
+    allGenres: [],
+    selectedGenres: [],
+    filteredResults: [],
     sortValue: "alpha",
+    filterGenre: '',
     isLoading: false
   }),
   methods: {
     retrieveMovies() {
       this.isLoading = true
       getAllMovies(this.$root.$data.userToken, "?reviews=true").then((r) => {
-        this.allMovies = r.map((m) => {
-          return {
+        for (let m of r) {
+          const movieGenres = m.genre.split(',').map(g => g.trim())
+          this.allGenres = this.allGenres.concat(movieGenres)
+          this.allMovies.push({
             movieBeanRating: getRatingAverage(m.ratings),
             numReviews: m.ratings.length,
+            genreArray: movieGenres,
             ...m
-          }
-        })
-        this.allMovies = sortAlpha(this.allMovies)
+          })
+        }
+        this.allGenres = sortArrayAlpha(Array.from(new Set(this.allGenres)))
+        this.allMovies = sortMoviesAlpha(this.allMovies)
+        this.filteredResults = this.allMovies
         this.isLoading = false
       })
     },
     sortList() {
       switch (this.sortValue) {
         case "alpha":
-          this.allMovies = sortAlpha(this.allMovies)
+          this.filteredResults = sortMoviesAlpha(this.filteredResults)
               break
         case "rating-high-low":
-          this.allMovies = sortHighLow(this.allMovies)
+          this.filteredResults = sortHighLow(this.filteredResults)
               break
         case "rating-low-high":
-          this.allMovies = sortLowHigh(this.allMovies)
+          this.filteredResults = sortLowHigh(this.filteredResults)
               break
         case "num-reviews":
-          this.allMovies = sortTotalReviews(this.allMovies)
+          this.filteredResults = sortTotalReviews(this.filteredResults)
               break
       }
 
+    },
+    filterMovies() {
+      this.filteredResults = filterGenre(this.selectedGenres, this.allMovies)
+      console.log(this.filteredResults)
     }
   },
   beforeMount() {

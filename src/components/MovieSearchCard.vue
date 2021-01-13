@@ -12,9 +12,9 @@
 
           <div
             v-if="movieBeanRating"
-            class="md-body-2"
+            class="md-subheading"
           >
-            Movie Bean Rating: {{ movieBeanRating }} / 10
+            Beans: {{ movieBeanRating }} / 10
           </div>
           <div
             v-if="numOfReviews > 0"
@@ -110,6 +110,14 @@ export default {
     viewExistingMovie(imdbID) {
       this.$root.$data.activeMovie = imdbID
       this.$root.$data.setPageView("MovieDetails")
+    },
+    determineEmoji(rating) {
+      switch (rating) {
+        case rating >= 10:
+          return "😍"
+        case rating >= 9:
+          return "🥰"
+      }
     }
   },
 }

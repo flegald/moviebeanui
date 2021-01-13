@@ -26,7 +26,9 @@
         />
       </li>
     </ul>
-    <div id="junk">{{junkText}}</div>
+    <div id="junk">
+      {{ junkText }}
+    </div>
   </div>
 </template>
 
