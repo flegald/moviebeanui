@@ -26,9 +26,6 @@
         />
       </li>
     </ul>
-    <div id="junk">
-      {{ junkText }}
-    </div>
   </div>
 </template>
 
@@ -42,7 +39,6 @@ export default {
   data: () => ({
     movies: [],
     isLoading: false,
-    junkText: ''
   }),
   methods: {
     retrieveReviews() {
