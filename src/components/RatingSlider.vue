@@ -14,6 +14,11 @@
       style="padding-left: 15px; padding-right: 15px;"
     />
     <br>
+    <md-field>
+      <label>Why that many beans?</label>
+      <md-textarea v-model="ratingComment" maxlength="255"/>
+      <span class="md-helper-text">{{ ratingComment.length }}/255</span>
+    </md-field>
     <br>
     <md-button
       class="md-raised md-primary md-dense"
@@ -42,22 +47,22 @@
       You rated {{ recordedUserRating }} Beans!
     </p>
     <md-button
-        class="md-raised md-primary md-dense"
-        @click="resetRating"
+      class="md-raised md-primary md-dense"
+      @click="resetRating"
     >
       Edit Rating
     </md-button>
     <md-button
-        v-if="inWatchlist === 0"
-        class="md-raised md-primary md-dense"
-        @click="sendAddToWatchList(imdbID)"
+      v-if="inWatchlist === 0"
+      class="md-raised md-primary md-dense"
+      @click="sendAddToWatchList(imdbID)"
     >
       Add to Watchlist
     </md-button>
     <md-button
-        v-if="inWatchlist === 1"
-        class="md-raised md-primary md-dense"
-        @click="sendDeleteFromWatchList(imdbID)"
+      v-if="inWatchlist === 1"
+      class="md-raised md-primary md-dense"
+      @click="sendDeleteFromWatchList(imdbID)"
     >
       Remove From Watchlist
     </md-button>
@@ -75,6 +80,7 @@ export default {
     recordedUserRating: '',
     userRating: "5",
     inWatchlist: 0,
+    ratingComment: '',
     ratingData: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     ratingMarks: {
       "1": "🥺",
@@ -92,7 +98,12 @@ export default {
   },
   methods: {
     sendRating(imdbID) {
-      createMovieRating(imdbID, this.userRating , this.$root.$data.userToken)
+      createMovieRating(
+          imdbID,
+          this.userRating,
+          this.ratingComment,
+          this.$root.$data.userToken
+      )
       .then((resp) => {
         this.recordedUserRating = resp.rating
         this.sendDeleteFromWatchList(imdbID)
@@ -119,6 +130,7 @@ export default {
         if (resp) {
           if (resp.length > 0) {
             this.recordedUserRating = resp[0].rating
+            this.ratingComment = resp[0].comment ? resp[0].comment : ""
           }
         }
       })
@@ -133,7 +145,7 @@ export default {
     },
     resetRating() {
       this.recordedUserRating = ''
-    }
+    },
   },
   beforeMount() {
     this.getUserRating()

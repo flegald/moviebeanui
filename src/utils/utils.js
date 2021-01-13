@@ -9,7 +9,22 @@ export const getRatingAverage = (ratings) => {
     }).reduce((a, b) => a + b)) / ratings.length).toFixed(2)
 }
 
-export const sortAlpha = (movies) => {
+export const sortArrayAlpha = (movies) => {
+    return movies.sort((a, b) => {
+        let fa = a.toLowerCase(),
+            fb = b.toLowerCase();
+
+        if (fa < fb) {
+            return -1;
+        }
+        if (fa > fb) {
+            return 1;
+        }
+        return 0;
+    })
+}
+
+export const sortMoviesAlpha = (movies) => {
     return movies.sort((a, b) => {
         let fa = a.title.toLowerCase(),
             fb = b.title.toLowerCase();
@@ -40,4 +55,15 @@ export const sortTotalReviews = (movies) => {
     return movies.sort((a, b) => {
         return b.numReviews - a.numReviews;
     });
+}
+
+export const filterGenre = (genres, movieList) => {
+    if (!genres.length) return movieList
+    const filtered = [];
+    movieList.forEach((m) => {
+        if (m.genreArray.filter(g => genres.includes(g)).length) {
+            filtered.push(m)
+        }
+    })
+    return filtered
 }

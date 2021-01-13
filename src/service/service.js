@@ -26,7 +26,7 @@ export const serviceCall = (url, method, data= null, token= null) => {
 }
 
 export const login = (formData) => {
-    const endpoint = '/api-token-auth/'
+    const endpoint = '/login/'
     const method = "POST"
     return serviceCall(endpoint, method, formData)
 }
@@ -55,12 +55,13 @@ export const getMovieDetails = (imdbID, token) => {
     return serviceCall(endpoint, method, null, token)
 }
 
-export const createMovieRating = (imdbID, rating, token) => {
+export const createMovieRating = (imdbID, rating, comment, token) => {
     const endpoint = "/rating/"
     const method = "POST"
     const data = {
         "rating": rating,
-        "movie": imdbID
+        "movie": imdbID,
+        "comment": comment
     }
     return serviceCall(endpoint, method, data, token)
 }
