@@ -18,6 +18,7 @@ import BrowseMovies from "@/components/BrowseMovies";
 import Profile from "@/components/Profile";
 import LoginView from "@/components/LoginView";
 import Watchlist from "@/components/Watchlist";
+import Feed from "@/components/Feed";
 
 export default {
   name: "App",
@@ -28,7 +29,11 @@ export default {
     BrowseMovies,
     Profile,
     LoginView,
-    Watchlist
+    Watchlist,
+    Feed
   },
+  beforeMount() {
+    this.$root.$data.initializeSession()
+  }
 };
 </script>

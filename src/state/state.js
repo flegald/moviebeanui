@@ -1,3 +1,6 @@
+import { getToken, setToken } from "@/utils/userProfile";
+
+
 export const store = {
     userLoggedIn: false,
     userToken: '',
@@ -6,6 +9,7 @@ export const store = {
     logUserIn (token) {
       this.userLoggedIn = true
       this.userToken = token
+      setToken(token)
     },
     logUserOut () {
         this.userLoggedIn = false
@@ -19,5 +23,20 @@ export const store = {
     },
     retrieveToken() {
         return this.userToken
+    },
+    initializeSession() {
+        const token = getToken()
+        if (token) {
+            this.userToken = token
+            this.userLoggedIn = true
+            setToken(token)
+            this.pageView = "Feed"
+        }
+    },
+    removeSession() {
+        this.userToken = ''
+        this.userLoggedIn = true
+        setToken(null)
+        this.pageView = "LoginView"
     }
 }

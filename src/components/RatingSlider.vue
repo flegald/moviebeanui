@@ -16,7 +16,10 @@
     <br>
     <md-field>
       <label>Why that many beans?</label>
-      <md-textarea v-model="ratingComment" maxlength="255"/>
+      <md-textarea
+        v-model="ratingComment"
+        maxlength="255"
+      />
       <span class="md-helper-text">{{ ratingComment.length }}/255</span>
     </md-field>
     <br>

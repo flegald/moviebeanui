@@ -25,6 +25,14 @@
       </md-toolbar>
 
       <md-list>
+
+        <md-list-item
+            @click="navigate('Feed')"
+        >
+          <md-icon>person</md-icon>
+          <span class="md-list-item-text">Feed</span>
+        </md-list-item>
+
         <md-list-item
           @click="navigate('Profile')"
         >
