@@ -2,7 +2,7 @@
   <div>
     <span class="md-display-3">{{ movie.title }}</span>
     <br>
-    <md-divider />
+    <!--    <md-divider />-->
     <md-progress-bar
       v-if="isLoading.one && isLoading.two"
       md-mode="query"

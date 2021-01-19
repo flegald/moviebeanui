@@ -1,3 +1,5 @@
+import { clearToken } from "@/utils/userProfile";
+
 // const API_BASE = "http://127.0.0.1:8000"
 // const API_BASE = "http://10.0.0.172:8000"
 const API_BASE = "https://moviebeanapi.herokuapp.com"
@@ -18,7 +20,13 @@ export const serviceCall = (url, method, data= null, token= null) => {
     }
     const fullURL = `${API_BASE}${url}`
     return fetch(fullURL, config)
-        .then(resp => resp.json())
+        .then(resp => {
+            if (resp.status === 401) {
+                clearToken()
+                location.refresh()
+            }
+            return resp.json()
+        })
         .then(respJson => respJson)
         .catch((e) => {
             console.log(e)
@@ -108,6 +116,12 @@ export const removeFromWatchList = (imdbID, token) => {
     const method = "DELETE"
     const data = {"imdb_id": imdbID}
     return serviceCall(endpoint, method, data, token)
+}
+
+export const getFeed = (token) => {
+    const endpoint = "/feed/"
+    const method = "GET"
+    return serviceCall(endpoint, method, null, token)
 }
 
 
