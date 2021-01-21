@@ -19,7 +19,6 @@
       >
         <md-list-item
           :key="`${r.movie.imdb_id}${r.user.user}${Math.random().toString().substr(2, 8)}`"
-          v-for="r in feedData"
           @click="viewMovie(r.movie.imdb_id)"
         >
           <md-avatar
