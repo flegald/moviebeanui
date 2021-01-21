@@ -13,7 +13,7 @@
           class="md-large"
         >
           <img
-            :src="setImgSrc(rating.user.profile_img)"
+            :src="rating.user.profile_img"
             alt="Avatar"
           >
         </md-avatar>
@@ -47,15 +47,8 @@
 
 <script>
 
-import {generateImgSrc} from "@/utils/userProfile";
-
 export default {
   name: "RatingListItems",
-  methods: {
-    setImgSrc(img) {
-      return generateImgSrc(img)
-    }
-  },
   props: {
     allRatings: {
       type: Array,
