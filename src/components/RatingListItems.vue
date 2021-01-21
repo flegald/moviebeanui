@@ -8,9 +8,28 @@
       :key="rating.user"
     >
       <md-card-header>
+        <md-avatar
+          v-if="rating.user.profile_img"
+          class="md-large"
+        >
+          <img
+            :src="setImgSrc(rating.user.profile_img)"
+            alt="Avatar"
+          >
+        </md-avatar>
+
+        <md-avatar
+          v-else
+          class="md-large"
+        >
+          <img
+            src="https://cdn4.iconfinder.com/data/icons/fruits-n-vegetables-128-color/128/kidney_beans_bean-512.png"
+            alt="Avatar"
+          >
+        </md-avatar>
         <md-card-header-text>
           <div class="md-title">
-            {{ rating.user }}
+            {{ rating.user.user }}
           </div>
           <div class="md-subhead">
             {{ rating.rating }} / 10
@@ -28,8 +47,15 @@
 
 <script>
 
+import {generateImgSrc} from "@/utils/userProfile";
+
 export default {
   name: "RatingListItems",
+  methods: {
+    setImgSrc(img) {
+      return generateImgSrc(img)
+    }
+  },
   props: {
     allRatings: {
       type: Array,

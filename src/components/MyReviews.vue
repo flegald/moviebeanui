@@ -35,7 +35,7 @@ import { getAllUserReviews, getAllMovies } from "@/service/service";
 import MovieSearchCard from "@/components/MovieSearchCard";
 
 export default {
-  name: "Profile",
+  name: "MyReviews",
   data: () => ({
     movies: [],
     isLoading: false,
