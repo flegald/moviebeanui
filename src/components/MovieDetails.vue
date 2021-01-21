@@ -54,6 +54,7 @@
       <br>
       <RatingListItems
         v-if="allRatings.length"
+        @update="getRatings"
         :all-ratings="allRatings"
       />
     </div>
