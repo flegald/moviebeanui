@@ -47,8 +47,8 @@
         </form>
 
         <md-progress-bar
-            v-else
-            md-mode="query"
+          v-else
+          md-mode="query"
         />
       </md-card-content>
 
