@@ -26,7 +26,7 @@
             class="md-large"
           >
             <img
-              :src="generateImgSrc(r.user.profile_img)"
+              :src="r.user.profile_img"
               alt="People"
             >
           </md-avatar>
@@ -55,7 +55,6 @@
 
   <script>
     import { getFeed } from "@/service/service";
-    import { generateImgSrc } from "@/utils/userProfile";
 
     export default {
       name: "Feed",
@@ -73,9 +72,6 @@
         .finally(() => {
           this.isLoading = false
         })
-        },
-        generateImgSrc(img) {
-          return generateImgSrc(img)
         },
         viewMovie(imdbID) {
           this.$root.$data.setActiveMovie(imdbID)

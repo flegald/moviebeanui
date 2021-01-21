@@ -8,7 +8,7 @@
             class="md-large"
           >
             <img
-              :src="setImgSrc(profile.profile_img)"
+              :src="profile.profile_img"
               alt="Avatar"
             >
           </md-avatar>
@@ -31,6 +31,7 @@
         <form
           novalidate
           class="md-layout"
+          v-if="!isLoading"
         >
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
@@ -44,13 +45,18 @@
             </div>
           </div>
         </form>
+
+        <md-progress-bar
+            v-else
+            md-mode="query"
+        />
       </md-card-content>
 
       <md-card-actions>
         <md-button
           @click="uploadImage"
           class="md-raised md-primary"
-          :disabled="image === null"
+          :disabled="image === null || isLoading"
         >
           Upload
         </md-button>
@@ -70,21 +76,18 @@
 
 <script>
 
-import { generateImgSrc } from "@/utils/userProfile";
 import {getUserProfile, uploadUserImg} from "@/service/service";
 
 export default {
 name: "Settings",
   data: () => ({
     image: null,
-    profile: {}
+    profile: {},
+    isLoading: false
   }),
   methods: {
     setUserProfile() {
       this.profile = this.$root.$data.profile
-    },
-    setImgSrc(img) {
-      return generateImgSrc(img)
     },
     logout() {
       this.$root.$data.removeSession()
@@ -93,6 +96,7 @@ name: "Settings",
       this.image = event.target.files[0]
     },
     uploadImage() {
+      this.isLoading = true
       const imageData = new FormData()
       imageData.append('image', this.image, this.image.name);
       uploadUserImg(imageData, this.$root.$data.userToken)
@@ -100,6 +104,9 @@ name: "Settings",
             getUserProfile(this.$root.$data.userToken).then((resp) => {
               this.$root.$data.setUserSession(resp)
               this.profile = resp
+            })
+            .finally(() => {
+              this.isLoading = false
             })
       })
     }
