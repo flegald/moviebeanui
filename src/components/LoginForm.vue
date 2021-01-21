@@ -82,7 +82,6 @@ export default {
             "password": this.form.password
           }).then((r) => {
             if (r.token) {
-              console.log(r)
               const token = r.token
               getUserProfile(token).then((resp) => {
                 this.$root.$data.setUserSession(resp)

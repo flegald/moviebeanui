@@ -2,8 +2,8 @@
 import { clearToken } from "@/utils/userProfile";
 
 // export const API_BASE = "http://127.0.0.1:8000"
-export const API_BASE = "http://10.0.0.172:8000"
-// export const API_BASE = "https://moviebeanapi.herokuapp.com"
+// export const API_BASE = "http://10.0.0.172:8000"
+export const API_BASE = "https://moviebeanapi.herokuapp.com"
 
 
 export const serviceCall = (
@@ -145,8 +145,6 @@ export const getFeed = (token) => {
 export const uploadUserImg = (formData, token) => {
     const endpoint = "/profile/image/"
     const method = "POST"
-    console.log(formData)
-    console.log(formData.get("image"))
     return serviceCall(endpoint, method, token, null, formData)
 }
 
