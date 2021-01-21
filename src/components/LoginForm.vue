@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { login } from "@/service/service";
+import {getUserProfile, login} from "@/service/service";
 
 export default {
   name: "LoginForm",
@@ -80,10 +80,15 @@ export default {
           {
             "username": this.form.username,
             "password": this.form.password
-          }).then((resp) => {
-            if (resp.token) {
-              this.$root.$data.logUserIn(resp.token)
-              this.$root.$data.setPageView('Feed')
+          }).then((r) => {
+            if (r.token) {
+              const token = r.token
+              getUserProfile(token).then((resp) => {
+                this.$root.$data.setUserSession(resp)
+                this.$root.$data.setPageView("Feed")
+                this.$root.$data.logUserIn(token)
+                this.$root.$data.setPageView('Feed')
+              })
             } else {
               this.error = true
             }

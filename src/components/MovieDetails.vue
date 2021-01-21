@@ -4,7 +4,7 @@
     <br>
     <!--    <md-divider />-->
     <md-progress-bar
-      v-if="isLoading.one && isLoading.two"
+      v-if="isLoading.one || isLoading.two"
       md-mode="query"
     />
     <div v-else>

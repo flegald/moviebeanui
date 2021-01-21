@@ -5,38 +5,77 @@
     <md-divider />
     <br>
 
-    <md-list class="md-triple-line">
-      <md-list-item v-for="r in feedData" :key="`${r.movie.imdb_id}${r.user}`" @click="viewMovie(r.movie.imdb_id)">
-<!--        <md-avatar>-->
-<!--          <img src="https://placeimg.com/40/40/people/1" alt="People">-->
-<!--        </md-avatar>-->
+    <md-progress-bar
+      v-if="isLoading"
+      md-mode="query"
+    />
 
-        <div class="md-list-item-text">
-          <span><strong>{{r.user}}</strong> rated <strong>{{r.movie.title}}</strong></span>
-          <span>{{r.rating}} / 10 Beans</span>
-          <p>{{r.comment}}</p>
-        </div>
+    <md-list
+      v-else
+      class="md-triple-line"
+    >
+      <template
+        v-for="r in feedData"
+        @click="viewMovie(r.movie.imdb_id)"
+      >
+        <md-list-item
+          :key="`${r.movie.imdb_id}${r.user.user}`"
+        >
+          <md-avatar
+            v-if="r.user.profile_img"
+            class="md-large"
+          >
+            <img
+              :src="generateImgSrc(r.user.profile_img)"
+              alt="People"
+            >
+          </md-avatar>
 
-        <md-divider class="md-inset"></md-divider>
-      </md-list-item>
+          <md-avatar
+            v-else
+            class="md-large"
+          >
+            <img
+              src="https://cdn4.iconfinder.com/data/icons/fruits-n-vegetables-128-color/128/kidney_beans_bean-512.png"
+              alt="People"
+            >
+          </md-avatar>
+
+          <div class="md-list-item-text">
+            <span><strong>{{ r.user.user }}</strong> rated <strong>{{ r.movie.title }}</strong></span>
+            <span>{{ r.rating }} / 10 Beans</span>
+            <p>{{ r.comment }}</p>
+          </div>
+        </md-list-item>
+        <md-divider :key="`${r.movie.imdb_id}${r.user.user}-divider`" />
+      </template>
     </md-list>
   </div>
 </template>
 
   <script>
     import { getFeed } from "@/service/service";
+    import { generateImgSrc } from "@/utils/userProfile";
 
     export default {
       name: "Feed",
       data: () => ({
-      feedData: []
+      feedData: [],
+      isLoading: false
       }),
       methods: {
       retrieveFeed() {
+        this.isLoading = true
         getFeed(this.$root.$data.userToken)
           .then((resp) => {
             this.feedData = resp
           })
+        .finally(() => {
+          this.isLoading = false
+        })
+        },
+        generateImgSrc(img) {
+          return generateImgSrc(img)
         },
         viewMovie(imdbID) {
           this.$root.$data.setActiveMovie(imdbID)
@@ -49,4 +88,5 @@
     }
   </script>
 
-  <style scoped />
+<style scoped>
+</style>

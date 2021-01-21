@@ -15,10 +15,13 @@ import NavDrawer from "@/components/NavDrawer";
 import MovieSearch from "@/components/MovieSearch";
 import MovieDetails from "@/components/MovieDetails";
 import BrowseMovies from "@/components/BrowseMovies";
-import Profile from "@/components/Profile";
+import MyReviews from "@/components/MyReviews";
 import LoginView from "@/components/LoginView";
 import Watchlist from "@/components/Watchlist";
 import Feed from "@/components/Feed";
+import Settings from "@/components/Settings";
+
+import { getUserProfile } from "@/service/service";
 
 export default {
   name: "App",
@@ -27,13 +30,27 @@ export default {
     NavDrawer,
     MovieDetails,
     BrowseMovies,
-    Profile,
+    MyReviews,
     LoginView,
     Watchlist,
-    Feed
+    Feed,
+    Settings
+  },
+  methods: {
+    appInit () {
+      const token = this.$root.$data.initializeSession()
+      if (token) {
+        getUserProfile(token).then((resp) => {
+          this.$root.$data.setUserSession(resp)
+          this.$root.$data.setPageView("Feed")
+        })
+      } else {
+        this.$root.$data.setPageView("LoginView")
+      }
+    }
   },
   beforeMount() {
-    this.$root.$data.initializeSession()
+    this.appInit()
   }
 };
 </script>

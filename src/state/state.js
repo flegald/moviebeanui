@@ -1,4 +1,4 @@
-import { getToken, setToken } from "@/utils/userProfile";
+import {clearToken, getToken, setToken} from "@/utils/userProfile";
 
 
 export const store = {
@@ -6,6 +6,7 @@ export const store = {
     userToken: '',
     pageView: '',
     activeMovie: '',
+    profile: {},
     logUserIn (token) {
       this.userLoggedIn = true
       this.userToken = token
@@ -30,13 +31,17 @@ export const store = {
             this.userToken = token
             this.userLoggedIn = true
             setToken(token)
-            this.pageView = "Feed"
         }
+        return token
     },
     removeSession() {
+        clearToken()
         this.userToken = ''
         this.userLoggedIn = true
-        setToken(null)
-        this.pageView = "LoginView"
+        this.profile = {}
+        window.location.reload()
+    },
+    setUserSession(userSession) {
+        this.profile = userSession
     }
 }

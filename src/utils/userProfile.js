@@ -1,3 +1,5 @@
+import {API_BASE} from "@/service/service";
+
 export const MB_TOKEN_KEY = 'mb.auth'
 
 export const getToken = () => {
@@ -10,4 +12,8 @@ export const setToken = (token) => {
 
 export const clearToken = () => {
     localStorage.removeItem(MB_TOKEN_KEY)
+}
+
+export const generateImgSrc = (imgPath) => {
+    return`${API_BASE}${imgPath}`
 }

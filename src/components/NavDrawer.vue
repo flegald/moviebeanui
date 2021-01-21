@@ -25,16 +25,15 @@
       </md-toolbar>
 
       <md-list>
-
         <md-list-item
-            @click="navigate('Feed')"
+          @click="navigate('Feed')"
         >
-          <md-icon>person</md-icon>
+          <md-icon>list_alt</md-icon>
           <span class="md-list-item-text">Feed</span>
         </md-list-item>
 
         <md-list-item
-          @click="navigate('Profile')"
+          @click="navigate('MyReviews')"
         >
           <md-icon>person</md-icon>
           <span class="md-list-item-text">My Reviews</span>
@@ -60,6 +59,13 @@
           <md-icon>add_circle</md-icon>
           <span class="md-list-item-text">Add Movie</span>
         </md-list-item>
+
+        <md-list-item
+          @click="navigate('Settings')"
+        >
+          <md-icon>settings</md-icon>
+          <span class="md-list-item-text">Settings</span>
+        </md-list-item>
       </md-list>
     </md-drawer>
   </div>
@@ -82,12 +88,10 @@ export default {
   },
   data: () => ({
     showNavigation: false,
-    showSidepanel: false,
   }),
   methods: {
     navigate (page) {
       this.showNavigation = false
-      this.showSidepanel = false
       this.$root.$data.setPageView(page)
     }
   },
