@@ -148,4 +148,14 @@ export const uploadUserImg = (formData, token) => {
     return serviceCall(endpoint, method, token, null, formData)
 }
 
+export const addReaction = (reaction, ratingPk, token) => {
+    const endpoint = "/reaction/"
+    const method = "POST"
+    const data = {
+        "pk": ratingPk,
+        "reaction": reaction
+    }
+    return serviceCall(endpoint, method, token, data)
+}
+
 
