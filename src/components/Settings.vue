@@ -76,43 +76,43 @@
 
 <script>
 
-import {getUserProfile, uploadUserImg} from "@/service/service";
+import { getUserProfile, uploadUserImg } from '@/service/service'
 
 export default {
-name: "Settings",
+  name: 'Settings',
   data: () => ({
     image: null,
     profile: {},
     isLoading: false
   }),
   methods: {
-    setUserProfile() {
+    setUserProfile () {
       this.profile = this.$root.$data.profile
     },
-    logout() {
+    logout () {
       this.$root.$data.removeSession()
     },
-    stageImage(event) {
+    stageImage (event) {
       this.image = event.target.files[0]
     },
-    uploadImage() {
+    uploadImage () {
       this.isLoading = true
       const imageData = new FormData()
-      imageData.append('image', this.image, this.image.name);
+      imageData.append('image', this.image, this.image.name)
       uploadUserImg(imageData, this.$root.$data.userToken)
-          .then(() => {
-            getUserProfile(this.$root.$data.userToken).then((resp) => {
-              this.$root.$data.setUserSession(resp)
-              this.profile = resp
-            })
+        .then(() => {
+          getUserProfile(this.$root.$data.userToken).then((resp) => {
+            this.$root.$data.setUserSession(resp)
+            this.profile = resp
+          })
             .finally(() => {
               this.isLoading = false
             })
-      })
+        })
     }
   },
-  beforeMount() {
-  this.setUserProfile()
+  beforeMount () {
+    this.setUserProfile()
   }
 }
 </script>

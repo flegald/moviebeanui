@@ -75,10 +75,10 @@
 </template>
 
 <script>
-import { createAccount } from "@/service/service";
+import { createAccount } from '@/service/service'
 
 export default {
-  name: "CreateAccount",
+  name: 'CreateAccount',
   data: () => ({
     errorText: null,
     form: {
@@ -89,10 +89,10 @@ export default {
     }
   }),
   methods: {
-    sendCreateAccount() {
+    sendCreateAccount () {
       this.errorText = null
       if (this.form.password !== this.form.confirmPassword) {
-        this.errorText = "Passwords do not match"
+        this.errorText = 'Passwords do not match'
         return
       }
       const payload = {
@@ -101,21 +101,21 @@ export default {
         globalPassword: this.form.globalPassword
       }
       createAccount(payload)
-          .then((r) => {
-            if (r.error) {
-              if (r.error === "global_pw") {
-                this.errorText = "Incorrect password"
-              }
-              if (r.error === "duplicate") {
-                this.errorText = "Username exists"
-              }
-            } else {
-              this.$root.$data.logUserIn(r.token)
-              this.$root.$data.setPageView('Profile')
+        .then((r) => {
+          if (r.error) {
+            if (r.error === 'global_pw') {
+              this.errorText = 'Incorrect password'
             }
-      }).catch((e) => {
-        console.log(e)
-      })
+            if (r.error === 'duplicate') {
+              this.errorText = 'Username exists'
+            }
+          } else {
+            this.$root.$data.logUserIn(r.token)
+            this.$root.$data.setPageView('Profile')
+          }
+        }).catch((e) => {
+          console.log(e)
+        })
     }
   }
 }

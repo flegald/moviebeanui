@@ -40,11 +40,11 @@
 
 <script>
 import _ from 'lodash'
-import { movieSearch} from "@/service/service"
-import MovieSearchCard from "@/components/MovieSearchCard";
+import { movieSearch } from '@/service/service'
+import MovieSearchCard from '@/components/MovieSearchCard'
 
 export default {
-  name: "MovieSearch",
+  name: 'MovieSearch',
   data: () => ({
     searchInput: '',
     isSearching: false,
@@ -53,23 +53,23 @@ export default {
   components: {
     MovieSearchCard
   },
-  created() {
+  created () {
     this.sendSearchReq = _.debounce(this.sendSearchReq, 500)
   },
   methods: {
-    sendSearchReq() {
+    sendSearchReq () {
       this.isSearching = true
       movieSearch(this.searchInput, this.$root.$data.userToken)
-          .then((resp) => {
-            this.movies = resp
-          })
-          .catch(() => {
-            console.log("Error")
-          })
-      .finally(() => {
-        this.isSearching = false
-      })
-    },
+        .then((resp) => {
+          this.movies = resp
+        })
+        .catch(() => {
+          console.log('Error')
+        })
+        .finally(() => {
+          this.isSearching = false
+        })
+    }
   }
 }
 </script>

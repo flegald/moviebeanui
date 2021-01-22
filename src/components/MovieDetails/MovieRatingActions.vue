@@ -1,6 +1,6 @@
 <template>
   <div v-if="!recordedUserRating">
-    <p class="md-display-1">
+    <p class="md-title">
       How many Beans u think 🤔
     </p>
     <vue-slider
@@ -46,9 +46,7 @@
   </div>
 
   <div v-else>
-    <p class="md-display-1">
-      You rated {{ recordedUserRating }} Beans!
-    </p>
+    <br>
     <md-button
       class="md-raised md-primary md-dense"
       @click="resetRating"
@@ -75,84 +73,84 @@
 <script>
 
 import VueSlider from 'vue-slider-component'
-import {createMovieRating, getUserMovieRating, getWatchlist, addToWatchList, removeFromWatchList} from "@/service/service";
+import { createMovieRating, getUserMovieRating, getWatchlist, addToWatchList, removeFromWatchList } from '@/service/service'
 import 'vue-slider-component/theme/default.css'
 export default {
-  name: "RatingSlider",
-  data: () => ({
-    recordedUserRating: '',
-    userRating: "5",
-    inWatchlist: 0,
-    ratingComment: '',
-    ratingData: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-    ratingMarks: {
-      "1": "🥺",
-      "10": "🥰"
-    },
-  }),
+  name: 'MovieRatingActions',
+  components: {
+    VueSlider
+  },
   props: {
     imdbID: {
       type: String,
-      default: ""
-    },
+      default: ''
+    }
   },
-  components: {
-    VueSlider,
+  data: () => ({
+    recordedUserRating: '',
+    userRating: '5',
+    inWatchlist: 0,
+    ratingComment: '',
+    ratingData: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+    ratingMarks: {
+      1: '🥺',
+      10: '🥰'
+    }
+  }),
+  beforeMount () {
+    this.getUserRating()
+    this.getUserWatchlist()
   },
   methods: {
-    sendRating(imdbID) {
+    sendRating (imdbID) {
       createMovieRating(
-          imdbID,
-          this.userRating,
-          this.ratingComment,
-          this.$root.$data.userToken
+        imdbID,
+        this.userRating,
+        this.ratingComment,
+        this.$root.$data.userToken
       )
-      .then((resp) => {
-        this.recordedUserRating = resp.rating
-        this.sendDeleteFromWatchList(imdbID)
-        this.$emit("update")
-      })
+        .then((resp) => {
+          this.recordedUserRating = resp.rating
+          this.sendDeleteFromWatchList(imdbID)
+          this.$emit('update')
+        })
     },
-    sendAddToWatchList(imdbID) {
+    sendAddToWatchList (imdbID) {
       addToWatchList(imdbID, this.$root.$data.userToken)
-      .then(() => {
-        this.getUserWatchlist()
-      })
+        .then(() => {
+          this.getUserWatchlist()
+        })
     },
-    sendDeleteFromWatchList(imdbID) {
+    sendDeleteFromWatchList (imdbID) {
       removeFromWatchList(imdbID, this.$root.$data.userToken)
-          .then(() => {
-            this.getUserWatchlist()
-          })
+        .then(() => {
+          this.getUserWatchlist()
+        })
     },
-    getUserRating() {
+    getUserRating () {
       getUserMovieRating(
-          this.$root.$data.activeMovie,
-          this.$root.$data.userToken
+        this.$root.$data.activeMovie,
+        this.$root.$data.userToken
       ).then((resp) => {
         if (resp) {
           if (resp.length > 0) {
             this.recordedUserRating = resp[0].rating
-            this.ratingComment = resp[0].comment ? resp[0].comment : ""
+            this.ratingComment = resp[0].comment ? resp[0].comment : ''
           }
         }
       })
     },
-    getUserWatchlist() {
+    getUserWatchlist () {
       getWatchlist(this.$root.$data.userToken)
-          .then((resp) => {
-            this.inWatchlist = resp.filter((m) => {
-              return m.imdb_id === this.$root.$data.activeMovie
-            }).length
-          })
+        .then((resp) => {
+          this.inWatchlist = resp.filter((m) => {
+            return m.imdb_id === this.$root.$data.activeMovie
+          }).length
+        })
     },
-    resetRating() {
+    resetRating () {
       this.recordedUserRating = ''
-    },
-  },
-  beforeMount() {
-    this.getUserRating()
-    this.getUserWatchlist()
+    }
   }
 }
 </script>
