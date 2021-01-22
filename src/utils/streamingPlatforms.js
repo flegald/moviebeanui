@@ -9,5 +9,8 @@ export const platIcons = {
   hulu_plus: 'https://cdn1.iconfinder.com/data/icons/metro-ui-dock-icon-set--icons-by-dakirby/256/Hulu.png',
   hulu: 'https://cdn1.iconfinder.com/data/icons/metro-ui-dock-icon-set--icons-by-dakirby/256/Hulu.png',
   hbo_max: 'https://www.cabletv.com/app/uploads/HBO-Max.jpg',
-  google_play: 'https://theleaker.com/wp-content/uploads/2017/08/google-play.jpg'
+  google_play: 'https://theleaker.com/wp-content/uploads/2017/08/google-play.jpg',
+  kanopy: 'https://www.grpl.org/wp-content/uploads/2017/04/kanopy-square-black.png',
+  tbs: 'https://i.cdn.turner.com/v5cache/TBS/images/logos/tbs_open_graph_icon.png',
+  tnt: 'https://www.tntdrama.com/themes/custom/ten_theme/images/tbs_logo_white.png'
 }

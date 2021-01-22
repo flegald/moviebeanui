@@ -10,6 +10,12 @@
       <md-card-content>
         <div class="md-layout md-gutter md-alignment-bottom-center">
           <md-divider />
+          <p
+            v-if="!platforms.length"
+            class="empty-emoji"
+          >
+            🤷‍♀️
+          </p>
           <div
             v-for="plat in platforms"
             :key="plat.platform"
@@ -61,5 +67,8 @@ export default {
 }
 .plat-icon {
   width: 70px;
+}
+.empty-emoji {
+  font-size: 48px;
 }
 </style>
