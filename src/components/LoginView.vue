@@ -12,15 +12,15 @@
 </template>
 
 <script>
-import LoginForm from "@/components/LoginForm";
-import CreateAccount from "@/components/CreateAccount";
+import LoginForm from '@/components/LoginForm'
+import CreateAccount from '@/components/CreateAccount'
 export default {
-name: "LoginView",
+  name: 'LoginView',
   data: () => ({
-    view: "login"
+    view: 'login'
   }),
   methods: {
-    changeForm(view) {
+    changeForm (view) {
       this.view = view
     }
   },

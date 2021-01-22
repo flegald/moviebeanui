@@ -53,36 +53,36 @@
   </div>
 </template>
 
-  <script>
-    import { getFeed } from "@/service/service";
+<script>
+import { getFeed } from '@/service/service'
 
-    export default {
-      name: "Feed",
-      data: () => ({
-      feedData: [],
-      isLoading: false
-      }),
-      methods: {
-      retrieveFeed() {
-        this.isLoading = true
-        getFeed(this.$root.$data.userToken)
-          .then((resp) => {
-            this.feedData = resp
-          })
+export default {
+  name: 'Feed',
+  data: () => ({
+    feedData: [],
+    isLoading: false
+  }),
+  methods: {
+    retrieveFeed () {
+      this.isLoading = true
+      getFeed(this.$root.$data.userToken)
+        .then((resp) => {
+          this.feedData = resp
+        })
         .finally(() => {
           this.isLoading = false
         })
-        },
-        viewMovie(imdbID) {
-          this.$root.$data.setActiveMovie(imdbID)
-          this.$root.$data.setPageView('MovieDetails')
-        }
-      },
-      beforeMount() {
-        this.retrieveFeed()
-      }
+    },
+    viewMovie (imdbID) {
+      this.$root.$data.setActiveMovie(imdbID)
+      this.$root.$data.setPageView('MovieDetails')
     }
-  </script>
+  },
+  beforeMount () {
+    this.retrieveFeed()
+  }
+}
+</script>
 
 <style scoped>
 </style>

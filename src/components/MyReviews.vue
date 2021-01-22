@@ -31,40 +31,40 @@
 
 <script>
 
-import { getAllUserReviews, getAllMovies } from "@/service/service";
-import MovieSearchCard from "@/components/MovieSearchCard";
+import { getAllUserReviews, getAllMovies } from '@/service/service'
+import MovieSearchCard from '@/components/MovieSearchCard'
 
 export default {
-  name: "MyReviews",
+  name: 'MyReviews',
+  components: {
+    MovieSearchCard
+  },
   data: () => ({
     movies: [],
-    isLoading: false,
+    isLoading: false
   }),
+  beforeMount () {
+    this.retrieveReviews()
+  },
   methods: {
-    retrieveReviews() {
+    retrieveReviews () {
       this.isLoading = true
       getAllUserReviews(this.$root.$data.userToken)
-          .then((r) => {
-            const imdb_ids = r.map((r) => r.movie)
-            getAllMovies(this.$root.$data.userToken, `?ids=${imdb_ids}`)
+        .then((r) => {
+          const imdbIds = r.map((r) => r.movie)
+          getAllMovies(this.$root.$data.userToken, `?ids=${imdbIds}`)
             .then((resp) => {
               this.movies = resp.map((m) => {
                 return {
                   rating: r.filter((r) => r.movie === m.imdb_id)[0].rating,
-                  ... m
+                  ...m
                 }
               })
             }).finally(() => {
               this.isLoading = false
             })
-          })
+        })
     }
-  },
-  beforeMount() {
-    this.retrieveReviews()
-  },
-  components: {
-    MovieSearchCard
   }
 }
 </script>

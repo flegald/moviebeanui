@@ -61,26 +61,26 @@
 
 <script>
 
-import { addMovie } from "@/service/service";
+import { addMovie } from '@/service/service'
 
 export default {
-  name: "MovieSearchCard",
+  name: 'MovieSearchCard',
   props: {
     title: {
       type: String,
-      default: ""
+      default: ''
     },
     imdbID: {
       type: String,
-      default: ""
+      default: ''
     },
     imgURL: {
       type: String,
-      default: ""
+      default: ''
     },
     year: {
       type: String,
-      default: ""
+      default: ''
     },
     exists: {
       type: Boolean,
@@ -100,18 +100,18 @@ export default {
     }
   },
   methods: {
-    sendAddRequest(imdbID) {
+    sendAddRequest (imdbID) {
       addMovie(imdbID, this.$root.$data.userToken)
-          .then((resp) => {
-            this.$root.$data.activeMovie = resp.imdb_id
-            this.$root.$data.setPageView("MovieDetails")
-          })
+        .then((resp) => {
+          this.$root.$data.activeMovie = resp.imdb_id
+          this.$root.$data.setPageView('MovieDetails')
+        })
     },
-    viewExistingMovie(imdbID) {
+    viewExistingMovie (imdbID) {
       this.$root.$data.activeMovie = imdbID
-      this.$root.$data.setPageView("MovieDetails")
-    },
-  },
+      this.$root.$data.setPageView('MovieDetails')
+    }
+  }
 }
 </script>
 

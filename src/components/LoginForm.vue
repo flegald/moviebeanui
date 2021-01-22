@@ -58,15 +58,15 @@
 </template>
 
 <script>
-import {getUserProfile, login} from "@/service/service";
+import { getUserProfile, login } from '@/service/service'
 
 export default {
-  name: "LoginForm",
+  name: 'LoginForm',
   data: () => ({
     error: false,
     form: {
       username: null,
-      password: null,
+      password: null
 
     },
     isSending: false
@@ -77,28 +77,28 @@ export default {
       this.isSending = true
       this.error = false
       login(
-          {
-            "username": this.form.username,
-            "password": this.form.password
-          }).then((r) => {
-            if (r.token) {
-              const token = r.token
-              getUserProfile(token).then((resp) => {
-                this.$root.$data.setUserSession(resp)
-                this.$root.$data.setPageView("Feed")
-                this.$root.$data.logUserIn(token)
-                this.$root.$data.setPageView('Feed')
-              })
-            } else {
-              this.error = true
-            }
+        {
+          username: this.form.username,
+          password: this.form.password
+        }).then((r) => {
+        if (r.token) {
+          const token = r.token
+          getUserProfile(token).then((resp) => {
+            this.$root.$data.setUserSession(resp)
+            this.$root.$data.setPageView('Feed')
+            this.$root.$data.logUserIn(token)
+            this.$root.$data.setPageView('Feed')
           })
-      .catch(() => {
-        this.error = true
+        } else {
+          this.error = true
+        }
       })
-      .finally(() => {
-        this.isSending = false
-      })
+        .catch(() => {
+          this.error = true
+        })
+        .finally(() => {
+          this.isSending = false
+        })
     }
   }
 }

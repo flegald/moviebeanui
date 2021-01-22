@@ -79,22 +79,22 @@
 </template>
 
 <script>
-import LoginView from "@/components/LoginView";
+import LoginView from '@/components/LoginView'
 
 export default {
-  name: "NavDrawer",
-  components:{
-    LoginView,
+  name: 'NavDrawer',
+  components: {
+    LoginView
   },
   data: () => ({
-    showNavigation: false,
+    showNavigation: false
   }),
   methods: {
     navigate (page) {
       this.showNavigation = false
       this.$root.$data.setPageView(page)
     }
-  },
+  }
 }
 </script>
 

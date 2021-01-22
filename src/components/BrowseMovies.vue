@@ -32,7 +32,6 @@
       </md-select>
     </md-field>
 
-
     <md-field>
       <label for="filterGenre">Genres</label>
       <md-select
@@ -75,7 +74,7 @@
 </template>
 
 <script>
-import { getAllMovies } from "@/service/service";
+import { getAllMovies } from '@/service/service'
 import {
   getRatingAverage,
   sortMoviesAlpha,
@@ -83,25 +82,25 @@ import {
   sortLowHigh,
   sortTotalReviews,
   sortArrayAlpha, filterGenre
-} from "@/utils/utils";
-import MovieSearchCard from "@/components/MovieSearchCard";
+} from '@/utils/utils'
+import MovieSearchCard from '@/components/MovieSearchCard'
 
 export default {
-  name: "BrowseMovies",
+  name: 'BrowseMovies',
   data: () => ({
     allMovies: [],
     allGenres: [],
     selectedGenres: [],
     filteredResults: [],
-    sortValue: "alpha",
+    sortValue: 'alpha',
     filterGenre: '',
     isLoading: false
   }),
   methods: {
-    retrieveMovies() {
+    retrieveMovies () {
       this.isLoading = true
-      getAllMovies(this.$root.$data.userToken, "?reviews=true").then((r) => {
-        for (let m of r) {
+      getAllMovies(this.$root.$data.userToken, '?reviews=true').then((r) => {
+        for (const m of r) {
           const movieGenres = m.genre.split(',').map(g => g.trim())
           this.allGenres = this.allGenres.concat(movieGenres)
           this.allMovies.push({
@@ -117,29 +116,28 @@ export default {
         this.isLoading = false
       })
     },
-    sortList() {
+    sortList () {
       switch (this.sortValue) {
-        case "alpha":
+        case 'alpha':
           this.filteredResults = sortMoviesAlpha(this.filteredResults)
-              break
-        case "rating-high-low":
+          break
+        case 'rating-high-low':
           this.filteredResults = sortHighLow(this.filteredResults)
-              break
-        case "rating-low-high":
+          break
+        case 'rating-low-high':
           this.filteredResults = sortLowHigh(this.filteredResults)
-              break
-        case "num-reviews":
+          break
+        case 'num-reviews':
           this.filteredResults = sortTotalReviews(this.filteredResults)
-              break
+          break
       }
-
     },
-    filterMovies() {
+    filterMovies () {
       this.filteredResults = filterGenre(this.selectedGenres, this.allMovies)
       console.log(this.filteredResults)
     }
   },
-  beforeMount() {
+  beforeMount () {
     this.retrieveMovies()
   },
   components: {

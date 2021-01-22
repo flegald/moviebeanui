@@ -32,31 +32,31 @@
 </template>
 
 <script>
-import MovieSearchCard from "@/components/MovieSearchCard";
-import { getWatchlist} from "@/service/service";
+import MovieSearchCard from '@/components/MovieSearchCard'
+import { getWatchlist } from '@/service/service'
 
 export default {
-name: "Watchlist",
+  name: 'Watchlist',
   data: () => ({
     movies: [],
     isLoading: false
   }),
   methods: {
-    getUserWatchlist() {
+    getUserWatchlist () {
       this.isLoading = true
       getWatchlist(this.$root.$data.userToken)
-      .then((resp) => {
-        this.movies = resp
-      })
-      .finally(() => {
-        this.isLoading = false
-      })
+        .then((resp) => {
+          this.movies = resp
+        })
+        .finally(() => {
+          this.isLoading = false
+        })
     }
   },
   components: {
     MovieSearchCard
   },
-  beforeMount() {
+  beforeMount () {
     this.getUserWatchlist()
   }
 }
