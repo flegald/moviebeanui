@@ -22,19 +22,19 @@
           <md-field>
             <label for="username">Username</label>
             <md-input
-              name="username"
               id="username"
               v-model="form.username"
+              name="username"
               :disabled="isSending"
             />
           </md-field>
           <md-field>
             <label for="password">Password</label>
             <md-input
-              type="password"
-              name="password"
               id="password"
               v-model="form.password"
+              type="password"
+              name="password"
               :disabled="isSending"
             />
           </md-field>
@@ -85,9 +85,8 @@ export default {
           const token = r.token
           getUserProfile(token).then((resp) => {
             this.$root.$data.setUserSession(resp)
-            this.$root.$data.setPageView('Feed')
             this.$root.$data.logUserIn(token)
-            this.$root.$data.setPageView('Feed')
+            this.$root.$data.setPageView('feed')
           })
         } else {
           this.error = true

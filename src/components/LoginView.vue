@@ -16,6 +16,10 @@ import LoginForm from '@/components/LoginForm'
 import CreateAccount from '@/components/CreateAccount'
 export default {
   name: 'LoginView',
+  components: {
+    CreateAccount,
+    LoginForm
+  },
   data: () => ({
     view: 'login'
   }),
@@ -23,10 +27,6 @@ export default {
     changeForm (view) {
       this.view = view
     }
-  },
-  components: {
-    CreateAccount,
-    LoginForm
   }
 }
 </script>

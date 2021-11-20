@@ -74,18 +74,13 @@
     <md-toolbar class="md-primary">
       <span class="md-title">Movie Bean</span>
     </md-toolbar>
-    <LoginView />
   </div>
 </template>
 
 <script>
-import LoginView from '@/components/LoginView'
 
 export default {
   name: 'NavDrawer',
-  components: {
-    LoginView
-  },
   data: () => ({
     showNavigation: false
   }),

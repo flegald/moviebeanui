@@ -1,4 +1,5 @@
 import { clearToken, getToken, setToken } from '@/utils/userProfile'
+import router from '@/router'
 
 export const store = {
   userLoggedIn: false,
@@ -16,7 +17,7 @@ export const store = {
     this.userToken = ''
   },
   setPageView (page) {
-    this.pageView = page
+    router.push({ path: page.toLowerCase() })
   },
   setActiveMovie (imdbID) {
     this.activeMovie = imdbID
